@@ -1,6 +1,7 @@
 from typing import Any
 from django import forms
-from rango.models import Category, Page
+from rango.models import Category, Page, UserProfile
+from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH, 
@@ -34,3 +35,18 @@ class PageForm(forms.ModelForm):
             cleaned_data['url'] = url
 
         return cleaned_data
+
+
+## AUTHENTICATION AND USER
+class UserForm(forms.ModelForm):
+    ## Why not username = or email = ?? -- to override it and hide the password (by default: not hidden)
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website', 'picture',)

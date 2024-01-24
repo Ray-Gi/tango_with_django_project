@@ -19,11 +19,7 @@
         </div>
         <div>
             {% block sidebar_block %}
-<<<<<<< HEAD
                 {% get_category_list category %}
-=======
-                {% get_category_list %}
->>>>>>> f6d03d1825e1be22fdd3c1a8f7e1ffc71794a186
             {% endblock %}
         </div>
         <hr />
@@ -32,6 +28,7 @@
                 <li><a href="{% url 'rango:add_category' %}">Add a New Category</a></li>
                 <li><a href="{% url 'rango:about' %}">About</a></li>
                 <li><a href="{% url 'rango:index' %}">Index</a></li>
+                <li><a href="{% url 'rango:register' %}">Sign Up</a></li>
             </ul>
         </div>
     </body>
