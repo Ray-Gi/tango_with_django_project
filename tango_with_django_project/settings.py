@@ -127,3 +127,6 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
+
+# login_required() redirects unauthorized users here
+LOGIN_URL = 'rango:login'

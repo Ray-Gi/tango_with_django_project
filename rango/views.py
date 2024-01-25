@@ -4,7 +4,8 @@ from django.urls import reverse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserProfileForm, UserForm 
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     # query Category and retrieve top 5 categories
@@ -155,3 +156,13 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'rango/login.html')
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
+
+# so that only users logged in can access this view
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('rango:index'))
