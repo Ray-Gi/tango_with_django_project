@@ -4,6 +4,7 @@ from django.urls import reverse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserProfileForm, UserForm 
 from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
 
 def index(request):
     # query Category and retrieve top 5 categories
@@ -107,6 +108,8 @@ def register(request):
             user.set_password(user.password)
             user.save()
 
+            # commit=False: stops django from saving the data to the database
+            # at the first instance
             profile = profile_form.save(commit=False)
             profile.user = user
 
@@ -130,3 +133,25 @@ def register(request):
                   context = {'user_form': user_form,
                              'profile_form':profile_form,
                              'registered': registered})
+
+
+## LOGIN VIEW
+def user_login(request):
+    if request.method == 'POST':
+        # will return none if doesnt exist. POST[''] 
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('rango:index'))
+            else:
+                return HttpResponse("Your Rango account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'rango/login.html')
