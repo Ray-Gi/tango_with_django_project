@@ -29,7 +29,7 @@ SECRET_KEY = '&ie1!81=p#s26b*1)40wh&-hxi9*dc$bken90k5-0)co5fgzz5'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Application definition
 
